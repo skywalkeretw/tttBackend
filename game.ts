@@ -4,7 +4,7 @@ import {createGame} from "./functions/createGame.ts";
 import {joinGame} from "./functions/joinGame.ts";
 import {newGame} from "./functions/newGame.ts";
 import {makeMove} from "./functions/makeMove.ts";
-import {game} from "./gameInterface.ts";
+import {game} from "./interfaces/gameInterface.ts";
 import {closedWebSocketHandler} from "./functions/closed.ts";
 import {leaveGame} from "./functions/leaveGame.ts";
 import {returnActiveGames} from "./functions/returnActiveGames.ts";

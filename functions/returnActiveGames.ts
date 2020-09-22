@@ -1,5 +1,5 @@
 import {userConnections, games} from "../game.ts";
-import {game} from "../gameInterface.ts";
+import {game} from "../interfaces/gameInterface.ts";
 
 function returnActiveGames() {
     userConnections.forEach((data) => {

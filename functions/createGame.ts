@@ -1,7 +1,6 @@
-import { WebSocket } from 'https://deno.land/std/ws/mod.ts';
 import { v4 } from 'https://deno.land/std/uuid/mod.ts';
-import {game} from "../gameInterface.ts";
-import {generateName} from "../randomName.ts";
+import {game} from "../interfaces/gameInterface.ts";
+import {generateName} from "./randomName.ts";
 import {startNewGame} from "./newGame.ts";
 import {games, userConnections} from "../game.ts";
 import {returnActiveGames} from "./returnActiveGames.ts";

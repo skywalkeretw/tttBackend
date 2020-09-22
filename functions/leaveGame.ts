@@ -1,6 +1,6 @@
 import {games, userConnections} from "../game.ts";
 import {returnActiveGames} from "./returnActiveGames.ts";
-import {game} from "../gameInterface.ts";
+import {game} from "../interfaces/gameInterface.ts";
 
 function leaveGame(uid: string) {
     let gid: string

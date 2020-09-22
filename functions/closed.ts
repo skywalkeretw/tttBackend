@@ -1,6 +1,6 @@
 import {games, userConnections} from "../game.ts";
 import {returnActiveGames} from "./returnActiveGames.ts";
-import {game} from "../gameInterface.ts";
+import {game} from "../interfaces/gameInterface.ts";
 import {oLeavesGame, xLeavesGame} from "./leaveGame.ts";
 
 function closedWebSocketHandler(uid: string) {
@@ -10,8 +10,6 @@ function closedWebSocketHandler(uid: string) {
         // @ts-ignore
         gid = userConnections.get(uid).gameID
     }
-    // @ts-ignore
-    console.log("deleteing: " + gid)
     // @ts-ignore
     gameOnConnectionDropped(uid, gid)
     userConnections.delete(uid);
@@ -31,9 +29,7 @@ function gameOnConnectionDropped(uid: string, gid: string) {
         // delete Game if only one User
         // @ts-ignore
         if ((uid === game.playerx) && (game.playero === "")) {
-            // @ts-ignore
-            console.log("game: " + game.gameId + "has been deleted")
-            games.delete(gid)
+             games.delete(gid)
         } else {
             // @ts-ignore
             xLeavesGame(uid, game)
