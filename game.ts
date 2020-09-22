@@ -1,11 +1,13 @@
 import { WebSocket, isWebSocketCloseEvent } from 'https://deno.land/std/ws/mod.ts';
 import { v4 } from 'https://deno.land/std/uuid/mod.ts';
-import {createGame, returnActiveGames} from "./functions/createGame.ts";
+import {createGame} from "./functions/createGame.ts";
 import {joinGame} from "./functions/joinGame.ts";
 import {newGame} from "./functions/newGame.ts";
 import {makeMove} from "./functions/makeMove.ts";
 import {game} from "./gameInterface.ts";
-//let games: {id: string, game: game}[] =[]
+import {closedWebSocketHandler} from "./functions/closed.ts";
+import {leaveGame} from "./functions/leaveGame.ts";
+import {returnActiveGames} from "./functions/returnActiveGames.ts";
 
 
 
@@ -22,25 +24,7 @@ const gameConnection = async (ws: WebSocket) => {
     for await (const ev of ws) {
         // delete socket if connection closed
         if (isWebSocketCloseEvent(ev)) {
-            userConnections.delete(uid);
-            let gid: string
-            games.forEach((data) => {
-                if(data.playerx === uid || data.playero === uid) {
-                    if(data.playerx === "" || data.playero === "") {
-                        games.delete(data.gameId)
-                    } else {
-                        if (data.playerx === uid) {
-                            data.playerx = ""
-                        }
-                        if (data.playero === uid) {
-                            data.playero = ""
-                        }
-                    }
-                }
-                    gid = data.gameId
-                }
-            )
-            returnActiveGames()
+            closedWebSocketHandler(uid)
         }
 
         // create ev object if ev is string
@@ -48,6 +32,9 @@ const gameConnection = async (ws: WebSocket) => {
             let evObj = JSON.parse(ev.toString());
 
             switch (evObj.action) {
+                case "getGames":
+                    returnActiveGames()
+                    break;
                 case "createGame":
                     createGame(evObj.data, uid)
                     break;
@@ -59,6 +46,10 @@ const gameConnection = async (ws: WebSocket) => {
                     break;
                 case "makeMove":
                     makeMove(evObj.data, uid)
+                    break;
+                case "leaveGame":
+                    leaveGame(uid)
+
             }
         } else {
             returnActiveGames()

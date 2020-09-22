@@ -1,6 +1,4 @@
-import {game} from "../gameInterface.ts";
 import {games, userConnections} from "../game.ts";
-import {startNewGame} from "./newGame.ts";
 
 
 const makeMove = (dataObj: any, uid:string) => {
